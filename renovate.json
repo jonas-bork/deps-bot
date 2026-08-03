@@ -1,24 +1,39 @@
 {
   "customManagers": [
-     {
-       "customType": "regex",
-       "managerFilePatterns": ["/^\\.github/workflows/.*\\.ya?ml$/"],
-       "matchStrings": [
-         "RENOVATE_VERSION:\\s*['\"]?(?<currentValue>[\\w\\.-]+)['\"]?\\s*#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)"
-       ]
-     }
-   ],
+    {
+      "description": "Update Renovate",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/.*\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "RENOVATE_VERSION:\\s*['\"]?(?<currentValue>[0-9.]+)['\"]?"
+      ],
+      "depNameTemplate": "renovatebot/renovate",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    }
+  ],
   "packageRules": [
     {
       "description": "Automerge minor and patch updates for GitHub Actions",
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "automerge": true
     },
     {
       "description": "Update Renovate once a week and automerge",
-      "matchDepNames": ["renovatebot/renovate"],
-      "schedule": ["on sunday"],
+      "matchDepNames": [
+        "renovatebot/renovate"
+      ],
+      "schedule": [
+        "on sunday"
+      ],
       "automerge": true
     }
   ]
